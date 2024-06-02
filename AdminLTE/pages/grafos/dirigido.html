@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Graph Genius</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css" />
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+</head>
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+
+<body class="hold-transition sidebar-collapse">
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        
+                        <div class="col-sm-6">
+                            <div class="float-sm-left">
+                                <button class=" btn btn-block btn-danger" data-toggle="modal" data-target="#modal-lg">
+                                    Generar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Grafo</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body table-responsive p-0" style="height: 62vh;">
+                                    <img id="grafo-img" style="height: 100%; width: 100%;">
+                                </div>
+                            </div>
+                            <!-- /.card -->
+
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Matriz de Adyacencia</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body table-responsive p-0" style="height: 62vh;">
+                                    <img id="adyacencia-img" >
+                                </div>
+                            </div>
+                            <!-- /.card -->
+
+
+                        </div>
+                        <!-- /.col-md-6 -->
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Tabla de Grados</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body table-responsive p-0" style="height: 62vh;">
+                                    <table class="table table-head-fixed text-nowrap text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>Nodo</th>
+                                                <th>Grado de Entrada</th>
+                                                <th>Grado de Salida</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-grados">
+                                            <tr>
+                                                <td COLSPAN="3">No hay ningun resultado procesado</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <h3 class="card-title">Matriz de Incidencia</h3>
+                                </div>
+                                <div class="card-body table-responsive p-0" style="height: 62vh;">
+                                    <img id="incidencia-img" >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-md-6 -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <div class="modal fade" id="modal-lg" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Generar Grafo</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!-- form start -->
+                    <form id="quickForm">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Vertices:</label>
+                                <input type="text" name="vertice" id="vertices" class="form-control"
+                                    placeholder="Ej: A,B,C,D">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Aristas:</label>
+                                <input type="text" name="arista" id="aristas" class="form-control"
+                                    placeholder="Ej: A-D,B-C,D-B">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn-generar" onclick="generarGrafo()" class="btn btn-danger">Procesar</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+    <!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+
+<script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+<!-- Bootstrap -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="../../dist/js/adminlte.js"></script>
+
+    <script>
+        const url = `https://graph-genius-backend.herokuapp.com/graph-genius/api/graph?vertices=${vertices}&aristas=${aristas}&dirigido=1`;
+
+        function generarGrafo() {
+            $("#btn-generar").addClass("disabled")
+            $("#btn-generar").text("Procesando...")
+            vertices = $("#vertices").val()
+            aristas = $("#aristas").val()
+            $.ajax({
+                url: 'https://graph-genius-backend.herokuapp.com/graph-genius/api/graph',
+                type: 'GET',
+                data: {
+                    vertices: vertices,
+                    aristas: aristas,
+                    dirigido: 1,
+                },
+                success: function (result) {
+                    try {
+                        var imgGrafo = result.data.grafo;
+                        var MzAdyacencia = result.data.matriz_adyacencia;
+                        var MzIncidencia = result.data.matriz_incidencia;
+
+                        $('#grafo-img').attr('src', 'data:image/png;base64,' + imgGrafo);
+                        $('#adyacencia-img').attr('src', 'data:image/png;base64,' + MzAdyacencia);
+                        $('#incidencia-img').attr('src', 'data:image/png;base64,' + MzIncidencia);
+                        
+                        var tabla = $('#tabla-grados');
+                        
+                        tabla.empty();
+
+                        // Iterar sobre los elementos de la respuesta
+                        $.each(result.data.tabla_grados, function (i, elemento) {
+                            // Crear una nueva fila para el elemento
+                            var fila = $('<tr>').appendTo(tabla);
+                            // Agregar las celdas con los datos del elemento
+                            $('<td>').text(elemento.nodo).appendTo(fila);
+                            $('<td>').text(elemento.grado_entrada).appendTo(fila);
+                            $('<td>').text(elemento.grado_salida).appendTo(fila);
+                        });
+                    } catch (error) {
+                        alert("Ocurrio un error procesando los datos obtenidos, por favor consulte con el administrador")
+                    }
+                    $("#vertices").val("")
+                    $("#aristas").val("")
+                    $("#btn-generar").removeClass("disabled")
+                    $("#btn-generar").text("Procesar")
+                    $('#modal-lg').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Ocurrio un error al realizar la peticion, por favor consulte con el administrador")
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
